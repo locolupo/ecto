@@ -2,7 +2,7 @@ defmodule Ecto.Mixfile do
   use Mix.Project
 
   @version "1.0.6"
-  @adapters [:pg, :mysql]
+  @adapters [:pg, :mysql, :couchdb]
   @pools [:poolboy, :sojourn_timeout, :sojourn_codel]
 
   def project do
@@ -30,7 +30,7 @@ defmodule Ecto.Mixfile do
   end
 
   def application do
-    [applications: [:logger, :decimal, :poolboy],
+    [applications: [:logger, :decimal, :poolboy, :couchbeam],
      env: [json_library: Poison]]
   end
 
@@ -43,7 +43,8 @@ defmodule Ecto.Mixfile do
      {:poison, "~> 1.0", optional: true},
      {:ex_doc, "~> 0.10", only: :docs},
      {:earmark, "~> 0.1", only: :docs},
-     {:inch_ex, only: :docs}]
+     {:inch_ex, only: :docs},
+     {:couchdb_ecto,  path: "../couchdb_ecto"}]
   end
 
   defp test_paths(adapter) when adapter in @adapters, do: ["integration_test/#{adapter}"]
